@@ -16,6 +16,9 @@ int main(int argc, char *argv[]){
 
     if (argc == 2) {
         omp_set_num_threads(atoi(argv[1]));    
+    } else {
+        printf("Uso:- %s <num hilos>\n", argv[0]);
+        exit(-1);
     }
 
     const int nTrials = 5;
