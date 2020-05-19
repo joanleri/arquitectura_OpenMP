@@ -10,8 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-//#include <windows.h>
-#include <time.h>
+#include <omp.h>
 #include <math.h>
 static       int gProgress    = 0,
                  gPrimesFound = 0;   // Acumulador de número de primos encontrados
@@ -55,16 +54,12 @@ int TestForPrime(int val)
     return (factor > limit);
 }
 
-void FindPrimes(int start, int end)
-{
+void FindPrimes(int start, int end) {
     // start siempre es non
     int i,range = end - start + 1;
-    
-    for( i = start; i <= end; i += 2 )
-    {
+    for( i = start; i <= end; i += 2) {
         if( TestForPrime(i) )
             globalPrimes[gPrimesFound++] = i;
-        
         ShowProgress(i, range);
     }
 }
@@ -73,7 +68,6 @@ void FindPrimes(int start, int end)
 int main(int argc, char **argv)
 {
     int     start, end, i;
-    clock_t before, after;
     
     if( argc == 3 )
     {
@@ -91,7 +85,7 @@ int main(int argc, char **argv)
         exit(-1);
     }
     if (CLstart < 1 && CLend < 2) {
-		printf("El rango de bÃºsqueda debe estar formado por enteros positivos\n");
+		printf("El rango de búsqueda debe estar formado por enteros positivos\n");
 		exit(-1);
     }
     start = CLstart;
@@ -106,11 +100,11 @@ int main(int argc, char **argv)
         start = start + 1;  // Asegurar que iniciamos con un nÃºmero impar
     
 
-    before = clock();
+    const double before = omp_get_wtime();
     FindPrimes(start, end);
-    after = clock();
+    const double after = omp_get_wtime();;
     
     printf("\n\nSe encontraron %8d primos entre  %6d y %6d en %7.2f secs\n",
-           gPrimesFound, CLstart, CLend, (float)(after - before)/ CLOCKS_PER_SEC);
+           gPrimesFound, CLstart, CLend, (after - before));
     
 }

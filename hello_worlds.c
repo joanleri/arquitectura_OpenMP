@@ -6,12 +6,18 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <omp.h>
 
-#define NUM_THREADS 6
+int main(int argc, char **argv) {
 
-int main() {
-    omp_set_num_threads(NUM_THREADS);
+    if (argc == 2) {
+        omp_set_num_threads(atoi(argv[1]));
+    } else {
+        printf("Uso: %s <num hilos>\n", argv[0]);
+        exit(-1);
+    }
+
     #pragma omp parallel
     {
     int i;

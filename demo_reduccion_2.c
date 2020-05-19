@@ -44,5 +44,6 @@ int main(int argc, char *argv[]){
         const double analytical_result = (sqrt(x_upper_bound) - sqrt(x_lower_bound))*2;
         const double numerical_result = integral;
         printf("Result = %.8f (Should be %.8f; err = %.8f)  Time = %f ms\n", numerical_result, analytical_result, analytical_result-numerical_result, (t1-t0)*1000.0);
+        // printf("%f\n", (t1-t0)*1000.0);
     }
 }

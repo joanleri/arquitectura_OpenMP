@@ -57,14 +57,11 @@ int TestForPrime(int val)
     return (factor > limit);
 }
 
-void FindPrimes(int start, int end)
-{
+void FindPrimes(int start, int end) {
     // start siempre es non
     int i,range = end - start + 1;
-    
     #pragma omp parallel for
-    for( i = start; i <= end; i += 2 )
-    {
+    for (i = start; i <= end; i += 2) {
         if( TestForPrime(i) )
             #pragma omp critical 
             {
@@ -114,9 +111,9 @@ int main(int argc, char **argv)
 
     const double before = omp_get_wtime();
     FindPrimes(start, end);
-    const double after = omp_get_wtime();;
+    const double after = omp_get_wtime();
     
-    printf("\n\nSe encontraron %8d primos entre  %6d y %6d en %f s\n\n",
+    printf("\n\nSe encontraron %8d primos entre  %6d y %6d en %7.2f s\n\n",
            gPrimesFound, CLstart, CLend, (after - before));
     
 }
